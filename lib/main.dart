@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './themes.dart';
+
 import './screens/main_screen.dart';
 
 import './server/web_server.dart';
@@ -20,13 +22,17 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MainScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (_, ThemeMode currentMode, __) {
+        return MaterialApp(
+          title: 'Flutter App',
+          theme: ThemeData.light(useMaterial3: true),
+          darkTheme: ThemeData.dark(useMaterial3: true),
+          themeMode: currentMode,
+          home: const MainScreen(),
+        );
+      },
     );
   }
 }

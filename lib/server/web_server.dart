@@ -1,21 +1,17 @@
-// lib/server/local_web_server.dart
 import 'dart:io';
 import 'route_handler.dart';
 import 'routes/home_route.dart';
 
 class LocalWebServer {
-  static LocalWebServer? _instance;
-  factory LocalWebServer({int port = 8080, InternetAddress? address}) {
-    return _instance ??= LocalWebServer._internal(port: port, address: address);
-  }
-
   final int port;
   final InternetAddress address;
+
   HttpServer? _server;
   bool _isInitialized = false;
+
   late final Map<String, RouteHandler> _routes;
 
-  LocalWebServer._internal({
+  LocalWebServer({
     this.port = 8080,
     InternetAddress? address,
   }) : address = address ?? InternetAddress.anyIPv4 {
